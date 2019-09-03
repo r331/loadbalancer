@@ -14,15 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableDiscoveryClient
 public class Gateway {
 
-  @Autowired
-  FireBackCustomFilter fireBackCustomFilter;
-
   @Bean
   public RouteLocator myRoutes(RouteLocatorBuilder builder) {
     return builder.routes()
         .route(r -> r.path("/api/**")
-            .filters(f -> f.rewritePath("/api/", "/service-instances/")
-                .filter(fireBackCustomFilter))
+            .filters(f -> f.rewritePath("/api/", "/service-instances/"))
             .uri("lb://UI/")
             .id("first-service")).build();
   }

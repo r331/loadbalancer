@@ -15,12 +15,13 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import firefilter.FireBackCustomFilter;
+import firefilter.RouteToLocalServicesFilter;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.server.MockServerWebExchange;
@@ -58,7 +59,7 @@ public class FireBackCustomFilterTests {
 
     GatewayFilterChain filterChain = mock(GatewayFilterChain.class);
 
-    GatewayFilter filter = new FireBackCustomFilter(eurekaClient);
+    GlobalFilter filter = new RouteToLocalServicesFilter((DiscoveryClient) eurekaClient);
 
     ArgumentCaptor<ServerWebExchange> captor = ArgumentCaptor
         .forClass(ServerWebExchange.class);
@@ -101,7 +102,7 @@ public class FireBackCustomFilterTests {
 
     GatewayFilterChain filterChain = mock(GatewayFilterChain.class);
 
-    GatewayFilter filter = new FireBackCustomFilter(eurekaClient);
+    GlobalFilter filter = new RouteToLocalServicesFilter((DiscoveryClient) eurekaClient);
 
     ArgumentCaptor<ServerWebExchange> captor = ArgumentCaptor
         .forClass(ServerWebExchange.class);
