@@ -19,7 +19,6 @@ import java.net.URLConnection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.springframework.cloud.gateway.filter.RouteToRequestUrlFilter.ROUTE_TO_URL_FILTER_ORDER;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR;
 
@@ -31,6 +30,7 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
 public class RouteToLocalServicesFilter implements GlobalFilter, Ordered {
 
   private static final String PING_CONTEXT = "/actuator/info";
+  public static final int ROUTE_TO_LOCAL_FILTER_ORDER = 20_000;
 
   private final DiscoveryClient discoveryClient;
   private final Map<String, URI> cache = new ConcurrentHashMap<>();
@@ -89,6 +89,6 @@ public class RouteToLocalServicesFilter implements GlobalFilter, Ordered {
 
   @Override
   public int getOrder() {
-    return ROUTE_TO_URL_FILTER_ORDER + 1;
+    return ROUTE_TO_LOCAL_FILTER_ORDER;
   }
 }
