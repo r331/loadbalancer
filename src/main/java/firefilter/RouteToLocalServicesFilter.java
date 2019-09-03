@@ -63,7 +63,7 @@ public class RouteToLocalServicesFilter implements GlobalFilter, Ordered {
     return route == null ? null : route.getUri().getHost().toLowerCase();
   }
 
-  private boolean isAlive(URI uri) {
+  protected boolean isAlive(URI uri) {
     if (uri == null) {
       return false;
     }
